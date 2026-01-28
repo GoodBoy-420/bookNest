@@ -1,29 +1,30 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const dataSchema = new mongoose.Schema(
+const dataSchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
 
     password: {
       type: String,
-      require: true,
+      required: true,
     },
-
+    role: {
+      enum: ["admin", "customer"],
+      type: String,
+      default: "customer",
+    },
     otp: {
       type: Number,
       default: 0,
     },
     profile: {
-      bio: {
-        type: String,
-      },
       profilePic: {
         type: String,
       },
@@ -32,7 +33,7 @@ const dataSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 export const UserModel = mongoose.model("users", dataSchema);

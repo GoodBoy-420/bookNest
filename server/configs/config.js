@@ -13,9 +13,9 @@ const dev = {
   cors: {
     origin: process.env.CLIENT_URL,
   },
-  jwt: {
+  jwtoken: {
     secretKey: process.env.SECRET_KEY,
-    expiresIn: process.env.SECJWT_EXPIRES_INRET_KEY,
+    expiresIn: process.env.JWT_EXPIRES_IN,
     refresh_secretKey: process.env.REFRESH_SECRET_KEY,
     refresh_expiresIn: process.env.REFRESH_JWT_EXPIRES_IN,
   },

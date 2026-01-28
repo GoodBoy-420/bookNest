@@ -8,11 +8,11 @@ export const getAuthUser = async (req) => {
       $match: { email: req?.claims?.email },
     },
     {
-      $project: { _id: 1, name: 1, email: 1 },
+      $project: { _id: 1, name: 1, email: 1, role: 1 },
     },
   ]);
 
-  if (!data || data.length == 0) throw new Error("User not exsts");
+  if (!data || data.length == 0) throw new Error("User does not exists");
 
   return data;
 };

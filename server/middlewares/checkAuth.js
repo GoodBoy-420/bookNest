@@ -1,5 +1,6 @@
-import "dotenv/config";
 import jwt from "jsonwebtoken";
+
+import config from "../configs/config.js";
 
 const checkAuth = (req, res, next) => {
   if (
@@ -8,6 +9,8 @@ const checkAuth = (req, res, next) => {
     req.path === "/api/v1/auth/register" ||
     req.path === "/api/v1/auth/login" ||
     req.path === "/api/v1/auth/email-verify" ||
+    req.path === "/api/v1/book/get-all" ||
+    req.path.startsWith("/api/v1/book/get/") ||
     req.path.startsWith("/api/v1/auth/otp-verify") ||
     req.path.startsWith("/api/v1/auth/reset-password")
   ) {
@@ -17,13 +20,11 @@ const checkAuth = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  // const token = req.cookies.token;
-
   if (!token) {
     throw new Error("Token not found");
   }
 
-  jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, config.jwtoken.secretKey, (err, decoded) => {
     if (err) {
       return res.status(401).json({ error: "Invalid Token" }); // Forbidden
     }

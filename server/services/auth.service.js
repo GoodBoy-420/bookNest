@@ -11,7 +11,7 @@ export const register = async (req) => {
   const existingUser = await UserModel.findOne({ email: data.email });
 
   if (existingUser) {
-    throw new Error("User alrday exist with this mail. Try with a new one");
+    throw new Error("User already exist with this mail. Try with a new one");
   }
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -21,6 +21,9 @@ export const register = async (req) => {
   const newUser = await UserModel.create(data);
 
   newUser.password = undefined;
+  newUser.otp = undefined;
+  newUser.role = undefined;
+  newUser._id = undefined;
 
   return newUser;
 };
@@ -41,12 +44,19 @@ export const login = async (email, password) => {
   const token = await getNewToken(user);
 
   user.password = undefined;
+  user.otp = undefined;
+  user.password = undefined;
+  user.role = undefined;
+  user._id = undefined;
 
   return { user, token };
 };
 
 export const refreshToken = async (refreshToken) => {
-  const decoded = await jwt.verify(refreshToken, config.jwt.refresh_secretKey);
+  const decoded = await jwt.verify(
+    refreshToken,
+    config.jwtoken.refresh_secretKey,
+  );
 
   if (!decoded) {
     throw new Error("Invalid refresh token");
