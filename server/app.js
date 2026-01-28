@@ -7,6 +7,8 @@ import helmet from "helmet";
 import hpp from "hpp";
 
 import config from "./configs/config.js";
+import checkAuth from "./middlewares/checkAuth.js";
+import customRoutes from "./routes/index.router.js";
 
 const app = express();
 
@@ -34,6 +36,10 @@ app.use(
     credentials: true,
   }),
 );
+
+app.use(checkAuth);
+
+app.use("/api/v1", customRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).send({
