@@ -4,7 +4,13 @@ import { BookModel } from "../models/book.model.js";
 
 const objectId = mongoose.Types.ObjectId;
 
-export const getAllBooks = async (keyword, page = 1) => {
+export const getAllBooks = async (
+  keyword = "",
+  page = 1,
+  minPrice,
+  maxPrice,
+  categories = [],
+) => {
   page = parseInt(page);
 
   if (isNaN(page) || page < 1) page = 1;
@@ -13,35 +19,46 @@ export const getAllBooks = async (keyword, page = 1) => {
 
   const skip = (page - 1) * limit;
 
-  let searchRegex = { $regex: keyword, $options: "i" };
+  const searchRegex = { $regex: keyword, $options: "i" };
 
-  let searchQuery = {
-    $match: {
-      $or: [{ title: searchRegex }, { description: searchRegex }],
-    },
+  const matchQuery = {
+    $and: [
+      {
+        $or: [{ title: searchRegex }, { description: searchRegex }],
+      },
+    ],
   };
 
-  const total = await BookModel.countDocuments({
-    $or: [{ title: searchRegex }, { content: searchRegex }],
-  });
+  // 💰 Price filter (slider)
+  if (minPrice !== undefined || maxPrice !== undefined) {
+    const priceFilter = {};
+    if (minPrice !== undefined) priceFilter.$gte = Number(minPrice);
+    if (maxPrice !== undefined) priceFilter.$lte = Number(maxPrice);
+
+    matchQuery.$and.push({ price: priceFilter });
+  }
+
+  // 🏷 Category filter (multiple)
+  if (categories.length > 0) {
+    matchQuery.$and.push({
+      category: { $in: categories },
+    });
+  }
+
+  const total = await BookModel.countDocuments(matchQuery);
 
   const books = await BookModel.aggregate([
-    searchQuery,
-    {
-      $sort: { createdAt: -1 },
-    },
+    { $match: matchQuery },
+    { $sort: { createdAt: -1 } }, // stable order
     { $skip: skip },
     { $limit: limit },
   ]);
 
-  if (!books || books.length === 0) {
-    throw new Error("No books found");
-  }
-
   return {
     total,
-    skip,
+    page,
     limit,
+    totalPages: Math.ceil(total / limit),
     books,
   };
 };

@@ -2,9 +2,16 @@ import * as BookServices from "../services/book.services.js";
 import { getAuthUser } from "../utils/getAuthUser.js";
 
 export const getAllBooks = async (req, res) => {
-  let keyword = req.query.keyword || "";
-  let page = req.query.page || "";
-  const result = await BookServices.getAllBooks(keyword, page);
+  const { keyword = "", page = 1, minPrice, maxPrice, categories } = req.query;
+
+  const categoryArray = categories ? categories.split(",") : [];
+  const result = await BookServices.getAllBooks(
+    keyword,
+    page,
+    minPrice,
+    maxPrice,
+    categoryArray,
+  );
 
   res.status(200).send({
     success: true,
