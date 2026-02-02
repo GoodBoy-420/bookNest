@@ -5,7 +5,7 @@ const dev = {
     port: process.env.PORT || 8080,
   },
   db: {
-    url: process.env.MONGO_URL,
+    url: String(process.env.MONGO_URL),
   },
   dns: {
     port: process.env.DNS_SERVER,

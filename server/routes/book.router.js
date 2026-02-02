@@ -5,6 +5,7 @@ import catchAsync from "../utils/catchAsync.js";
 const router = express.Router();
 
 router.route("/get-all").get(catchAsync(BookController.getAllBooks));
+router.route("/get-featured").get(catchAsync(BookController.getFeaturedBooks));
 
 router.route("/get/:bookId").get(catchAsync(BookController.getSingleBook));
 

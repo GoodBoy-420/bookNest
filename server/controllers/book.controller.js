@@ -1,7 +1,16 @@
 import * as BookServices from "../services/book.services.js";
 import { getAuthUser } from "../utils/getAuthUser.js";
 
-export const getAllBooks = async (req, res) => {
+const getFeaturedBooks = async (req, res) => {
+  const result = await BookServices.getFeaturedBooks();
+
+  res.status(200).send({
+    success: true,
+    data: result,
+  });
+};
+
+const getAllBooks = async (req, res) => {
   const { keyword = "", page = 1, minPrice, maxPrice, categories } = req.query;
 
   const categoryArray = categories ? categories.split(",") : [];
@@ -19,7 +28,7 @@ export const getAllBooks = async (req, res) => {
   });
 };
 
-export const getSingleBook = async (req, res) => {
+const getSingleBook = async (req, res) => {
   let bookId = req.params.bookId;
 
   if (!bookId) throw new Error("Book not found");
@@ -32,7 +41,7 @@ export const getSingleBook = async (req, res) => {
   });
 };
 
-export const postBook = async (req, res) => {
+const postBook = async (req, res) => {
   const user = await getAuthUser(req);
 
   if (user[0].role !== "admin") {
@@ -49,7 +58,7 @@ export const postBook = async (req, res) => {
   });
 };
 
-export const deleteBook = async (req, res) => {
+const deleteBook = async (req, res) => {
   const bookId = req.params.bookId;
 
   if (!bookId) throw new Error("Book not found");
@@ -64,7 +73,7 @@ export const deleteBook = async (req, res) => {
   });
 };
 
-export const updateBook = async (req, res) => {
+const updateBook = async (req, res) => {
   const user = await getAuthUser(req);
 
   const bookId = req.params.bookId;
@@ -82,4 +91,13 @@ export const updateBook = async (req, res) => {
     success: true,
     message: "Book Updated Successfully",
   });
+};
+
+export {
+  deleteBook,
+  getAllBooks,
+  getFeaturedBooks,
+  getSingleBook,
+  postBook,
+  updateBook,
 };
