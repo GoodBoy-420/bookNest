@@ -1,0 +1,53 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./components/shared/ErrorPage";
+import MainLayout from "./components/shared/MainLayout";
+import BooksPage from "./pages/BooksPage";
+import CartPage from "./pages/CartPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import RegistrationPage from "./pages/RegistrationPage";
+import WishListPage from "./pages/WishListPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: "signin",
+        element: <LoginPage />,
+      },
+      {
+        path: "books",
+        element: <BooksPage />,
+      },
+      {
+        path: "signup",
+        element: <RegistrationPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "cart",
+        element: <CartPage />,
+      },
+      {
+        path: "wish-list",
+        element: <WishListPage />,
+      },
+    ],
+  },
+]);
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
