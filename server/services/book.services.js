@@ -14,9 +14,11 @@ const getFeaturedBooks = async (req, res) => {
       $project: {
         _id: 0,
         stock: 0,
-        createdAt: 0,
         updatedAt: 0,
       },
+    },
+    {
+      $sort: { createdAt: -1 },
     },
   ]);
 
@@ -24,7 +26,7 @@ const getFeaturedBooks = async (req, res) => {
     throw new Error("book not found");
   }
 
-  return data.slice(0, 5);
+  return data.slice(0, 4);
 };
 
 const getAllBooks = async (
