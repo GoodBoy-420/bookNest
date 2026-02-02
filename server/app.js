@@ -33,7 +33,7 @@ app.use(hpp());
 app.use(
   cors({
     origin: config.cors.origin,
-    credentials: true,
+    // credentials: true,
   }),
 );
 

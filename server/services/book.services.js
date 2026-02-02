@@ -9,16 +9,16 @@ const getFeaturedBooks = async (req, res) => {
     {
       $match: { ratings: { $gte: 4.5 } },
     },
+    {
+      $sort: { createdAt: -1 },
+    },
 
     {
       $project: {
-        _id: 0,
         stock: 0,
+        createdAt: 0,
         updatedAt: 0,
       },
-    },
-    {
-      $sort: { createdAt: -1 },
     },
   ]);
 
@@ -75,6 +75,13 @@ const getAllBooks = async (
     { $sort: { createdAt: -1 } },
     { $skip: skip },
     { $limit: limit },
+    {
+      $project: {
+        stock: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    },
   ]);
 
   return {

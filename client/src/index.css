@@ -2,6 +2,10 @@
 
 @import "tailwindcss";
 
+@theme {
+  --color-primary: rgb(37, 150, 190);
+}
+
 * {
   font-family: "Inter", sans-serif;
 }
