@@ -1,11 +1,16 @@
 import * as AuthServices from "../services/auth.service.js";
 
-export const register = async (req, res) => {
-  if (!req?.body?.name || !req?.body?.email || !req?.body?.password) {
-    throw new Error("Please provide name, email and password");
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please fill all details",
+    });
   }
 
-  const result = await AuthServices.register(req);
+  const result = await AuthServices.register(name, email, password);
 
   res.status(201).send({
     success: true,
@@ -13,11 +18,15 @@ export const register = async (req, res) => {
   });
 };
 
-export const login = async (req, res) => {
-  if (!req?.body?.email || !req?.body?.password) {
-    throw new Error("Please provide email and password");
-  }
+const login = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please provide email and password",
+    });
+  }
   const result = await AuthServices.login(email, password);
 
   res.status(200).send({
@@ -26,11 +35,14 @@ export const login = async (req, res) => {
   });
 };
 
-export const refreshToken = async (req, res) => {
+const refreshToken = async (req, res) => {
   const { refreshToken } = req.body || "";
 
   if (!refreshToken) {
-    throw new Error("Refresh token not found");
+    return res.status(404).json({
+      success: false,
+      message: "Refresh Token not found",
+    });
   }
 
   const result = await AuthServices.refreshToken(refreshToken);
@@ -41,11 +53,14 @@ export const refreshToken = async (req, res) => {
   });
 };
 
-export const emailVerify = async (req, res) => {
+const emailVerify = async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
-    throw new Error("Please provide your email");
+    return res.status(400).json({
+      success: false,
+      message: "Please provide email.",
+    });
   }
 
   const result = await AuthServices.emailVerify(email);
@@ -56,12 +71,15 @@ export const emailVerify = async (req, res) => {
   });
 };
 
-export const otpVerify = async (req, res) => {
+const otpVerify = async (req, res) => {
   const email = req.query.email;
   const { code } = req.body;
 
   if (!code) {
-    throw new Error("Please provide OTP code");
+    return res.status(400).json({
+      success: false,
+      message: "Please provide OTP",
+    });
   }
 
   const result = await AuthServices.otpVerify(email, code);
@@ -72,9 +90,17 @@ export const otpVerify = async (req, res) => {
   });
 };
 
-export const resetPassword = async (req, res) => {
+const resetPassword = async (req, res) => {
   const email = req.query.email;
   const { password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({
+      success: false,
+      message: "Please provide password",
+    });
+  }
+
   const result = await AuthServices.resetPassword(email, password);
 
   res.status(200).send({
@@ -82,3 +108,5 @@ export const resetPassword = async (req, res) => {
     result,
   });
 };
+
+export { emailVerify, login, otpVerify, refreshToken, register, resetPassword };

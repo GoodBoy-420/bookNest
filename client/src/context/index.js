@@ -1,5 +1,6 @@
 import { createContext } from "react";
 
 const BookContext = createContext();
+const AuthContext = createContext();
 
-export { BookContext };
+export { AuthContext, BookContext };

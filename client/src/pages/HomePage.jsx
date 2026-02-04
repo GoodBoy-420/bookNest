@@ -15,7 +15,6 @@ const HomePage = () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/book/get-featured`,
-          // "http://localhost:8080/api/v1/book/get-featured",
         );
         if (response.status === 200) {
           // ?Success

@@ -5,20 +5,20 @@ import { sendEmail } from "../libs/sendEmail.js";
 import { UserModel } from "../models/user.model.js";
 import getNewToken from "../utils/getNewToken.js";
 
-export const register = async (req) => {
-  const data = req.body;
-
-  const existingUser = await UserModel.findOne({ email: data.email });
+const register = async (name, email, password) => {
+  const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    throw new Error("User already exist with this mail. Try with a new one");
+    const err = new Error("User already exists with this mail.");
+    err.statusCode = 404;
+    throw err;
   }
 
-  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  data.password = hashedPassword;
+  password = hashedPassword;
 
-  const newUser = await UserModel.create(data);
+  const newUser = await UserModel.create({ name, email, password });
 
   newUser.password = undefined;
   newUser.otp = undefined;
@@ -28,17 +28,21 @@ export const register = async (req) => {
   return newUser;
 };
 
-export const login = async (email, password) => {
+const login = async (email, password) => {
   const user = await UserModel.findOne({ email });
 
   if (!user) {
-    throw new Error("User not found with this mail.");
+    const err = new Error("User not found with this mail.");
+    err.statusCode = 404;
+    throw err;
   }
 
   const isPasswordMatch = await bcrypt.compare(password, user.password);
 
   if (!isPasswordMatch) {
-    throw new Error("Incorrect password");
+    const err = new Error("Incorrect password");
+    err.statusCode = 401;
+    throw err;
   }
 
   const token = await getNewToken(user);
@@ -52,20 +56,24 @@ export const login = async (email, password) => {
   return { user, token };
 };
 
-export const refreshToken = async (refreshToken) => {
+const refreshToken = async (refreshToken) => {
   const decoded = await jwt.verify(
     refreshToken,
     config.jwtoken.refresh_secretKey,
   );
 
   if (!decoded) {
-    throw new Error("Invalid refresh token");
+    const err = new Error("Invalid token");
+    err.statusCode = 401;
+    throw err;
   }
 
   const user = await UserModel.findById(decoded.id);
 
   if (!user) {
-    throw new Error("User not found");
+    const err = new Error("User is not authorized");
+    err.statusCode = 401;
+    throw err;
   }
 
   const token = getNewToken(user);
@@ -73,10 +81,12 @@ export const refreshToken = async (refreshToken) => {
   return token;
 };
 
-export const emailVerify = async (email) => {
+const emailVerify = async (email) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
-    throw new Error("User not found with this mail.");
+    const err = new Error("User not found with this mail.");
+    err.statusCode = 404;
+    throw err;
   }
   const code = String(Math.floor(100000 + Math.random() * 900000));
 
@@ -87,19 +97,30 @@ export const emailVerify = async (email) => {
   return { Message: "OTP sent to your mail" };
 };
 
-export const otpVerify = async (email, code) => {
+const otpVerify = async (email, code) => {
   const user = await UserModel.findOne({ email, otp: code });
-  if (!user) throw new Error("OTP does not matched");
+
+  if (!user) {
+    const err = new Error("User not found with this mail.");
+    err.statusCode = 404;
+    throw err;
+  }
 
   return { message: "OTP verified successfully." };
 };
 
-export const resetPassword = async (email, password) => {
+const resetPassword = async (email, password) => {
   const user = await UserModel.findOne({ email });
-  if (!user) throw new Error("User not found.");
+  if (!user) {
+    const err = new Error("User not found with this mail.");
+    err.statusCode = 404;
+    throw err;
+  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
   await UserModel.updateOne({ email }, { password: hashedPassword, otp: 0 });
 
   return { message: "Password changed successfully." };
 };
+
+export { emailVerify, login, otpVerify, refreshToken, register, resetPassword };

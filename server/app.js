@@ -47,9 +47,10 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use((err, req, res, _next) => {
-  res.status(500).json({
-    error: err.message,
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
   });
 });
 
