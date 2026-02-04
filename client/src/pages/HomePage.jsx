@@ -73,7 +73,7 @@ const HomePage = () => {
           <h3 className="text-2xl font-semibold mb-8 text-center">
             Latest Books
           </h3>
-          <LatestBooks latestBooks={state?.books?.books?.slice(0, 4)} />
+          <LatestBooks latestBooks={state?.books?.slice(0, 4)} />
         </div>
       </section>
     </>

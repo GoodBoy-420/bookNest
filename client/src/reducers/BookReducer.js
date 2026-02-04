@@ -1,5 +1,8 @@
 const initialState = {
   books: [],
+  page: 1,
+  total: 1,
+  totalPages: 1,
   loading: false,
   error: null,
 };
@@ -15,7 +18,10 @@ const bookReducer = (state, action) => {
     case "data_fetched": {
       return {
         ...state,
-        books: action.data,
+        books: action.data.books,
+        page: action.data.page,
+        total: action.data.total,
+        totalPages: action.data.totalPages,
         loading: false,
       };
     }
