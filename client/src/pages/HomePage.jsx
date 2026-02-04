@@ -14,9 +14,9 @@ const HomePage = () => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/book/get-featured`,
+          `${import.meta.env.VITE_BASE_URL}/book/get-all`,
         );
-        if (response.status === 200) {
+        if (response.data.success) {
           // ?Success
           dispatch({
             type: "data_fetched",
@@ -68,8 +68,14 @@ const HomePage = () => {
           </button>
         </div>
       </section>
-
-      <LatestBooks featuredBooks={state?.books} />
+      <section className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h3 className="text-2xl font-semibold mb-8 text-center">
+            Latest Books
+          </h3>
+          <LatestBooks latestBooks={state?.books?.books?.slice(0, 4)} />
+        </div>
+      </section>
     </>
   );
 };

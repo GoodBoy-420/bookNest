@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import Cart from "../../assets/cart.svg";
 import Logo from "../../assets/logo.svg";
 import Menu from "../../assets/menu.svg";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { auth } = useAuth();
+
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all relaitve">
       <Link>
@@ -33,12 +36,21 @@ const Navbar = () => {
           </button>
         </Link>
 
-        <Link
-          to="/signin"
-          className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary transition text-white rounded-full text-sm"
-        >
-          Login
-        </Link>
+        {auth && auth?.user?.role === "customer" ? (
+          <Link
+            to="/profile"
+            className="cursor-pointer px-6 py-2 mt-1 bg-primary hover:bg-cyan-800 transition text-white rounded-full text-sm"
+          >
+            Welcome, {auth?.user?.name}
+          </Link>
+        ) : (
+          <Link
+            to="/signin"
+            className="cursor-pointer px-6 py-2 mt-2 bg-primary hover:bg-primary transition text-white rounded-full text-sm"
+          >
+            Login
+          </Link>
+        )}
       </div>
 
       <button

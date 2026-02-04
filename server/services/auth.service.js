@@ -50,7 +50,6 @@ const login = async (email, password) => {
   user.password = undefined;
   user.otp = undefined;
   user.password = undefined;
-  user.role = undefined;
   user._id = undefined;
 
   return { user, token };

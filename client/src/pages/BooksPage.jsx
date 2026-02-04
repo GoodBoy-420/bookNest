@@ -1,5 +1,10 @@
-/* eslint-disable no-unused-vars */
+import { useBook } from "../hooks/useBook";
+
 const BooksPage = () => {
+  const { state } = useBook();
+
+  console.log(state?.books);
+
   return (
     <div className="min-h-screen bg-white text-gray-800">
       <section className="max-w-7xl mx-auto px-4 py-10">
@@ -36,9 +41,8 @@ const BooksPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          // eslint-disable-next-line no-unused-vars
           {[...Array(8)].map((_, index) => (
-            <div className="flex flex-col bg-white shadow-md w-72">
+            <div key={index} className="flex flex-col bg-white shadow-md w-72">
               <img
                 className="w-72 h-48 object-cover"
                 src="https://images.unsplash.com/photo-1657560566744-06d0b69f6647?q=80&w=600&auto=format&fit=crop"
