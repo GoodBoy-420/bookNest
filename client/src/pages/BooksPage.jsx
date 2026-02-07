@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import BookList from "../components/books/BookList";
 import Pagination from "../components/Pagination";
 import { useBook } from "../hooks/useBook";
 
@@ -111,36 +112,13 @@ const BooksPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {state?.book?.map.map((book) => (
-            <div
-              key={book._id}
-              className="flex flex-col bg-white shadow-md w-72"
-            >
-              <img
-                className="w-72 h-48 object-cover"
-                src="https://images.unsplash.com/photo-1657560566744-06d0b69f6647?q=80&w=600&auto=format&fit=crop"
-                alt="image"
-              />
-              <div className="p-4 text-sm">
-                <p className="text-slate-600"> {book.price} </p>
-                <p className="text-slate-800 text-base font-medium my-1.5">
-                  {book.title}
-                </p>
-                <p className="text-slate-500">{book.description}</p>
-                <div className="grid grid-cols-2 gap-2 mt-3">
-                  <button className="bg-slate-100 text-slate-600 py-2">
-                    Add to cart
-                  </button>
-                  <button className="bg-slate-800 text-white py-2">
-                    Buy now
-                  </button>
-                </div>
-              </div>
-            </div>
+          {state?.books?.map((book) => (
+            <BookList key={book._id} book={book} />
           ))}
+
           <Pagination
-            page={state.page}
-            totalPages={state.totalPages}
+            page={state?.page}
+            totalPages={state?.totalPages}
             onPageChange={(p) =>
               setSearchParams({ ...Object.fromEntries(searchParams), page: p })
             }

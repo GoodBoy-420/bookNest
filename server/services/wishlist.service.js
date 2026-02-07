@@ -1,10 +1,14 @@
 import { BookModel } from "../models/book.model.js";
 import { wishListModel } from "../models/wishList.model.js";
 
-export const toggleWishList = async (userId, bookId) => {
+const toggleWishList = async (userId, bookId) => {
   let book = await BookModel.findById(bookId);
 
-  if (!book) throw new Error("Book Not Found or might be deleted.");
+  if (!book) {
+    const err = new Error("Book Not Found or might be deleted.");
+    err.statusCode = 400;
+    throw err;
+  }
 
   const existingWish = await wishListModel.findOne({
     userId,
@@ -22,7 +26,7 @@ export const toggleWishList = async (userId, bookId) => {
   return "book added to wishLists";
 };
 
-export const getWishLists = async (userId) => {
+const getWishLists = async (userId) => {
   let JoinWithUserStage = {
     $lookup: {
       from: "users",
@@ -68,7 +72,13 @@ export const getWishLists = async (userId) => {
     projectStage,
   ]);
 
-  if (!wishList || wishList.length == 0) throw new Error("No wishLists found.");
+  if (!wishList || wishList.length == 0) {
+    const err = new Error("No wishLists found.");
+    err.statusCode = 404;
+    throw err;
+  }
 
   return wishList;
 };
+
+export { getWishLists, toggleWishList };

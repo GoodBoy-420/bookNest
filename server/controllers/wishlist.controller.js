@@ -5,11 +5,21 @@ export const toggleWishList = async (req, res) => {
   let user = await getAuthUser(req);
   const userId = user._id ?? user[0]?._id;
 
-  if (!userId) throw new Error("Invalid User");
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
 
   const { bookId } = req.params;
 
-  if (!bookId) throw new Error("Book does Not Found.");
+  if (!bookId) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
 
   const result = await WishListServices.toggleWishList(userId, bookId);
 
@@ -23,6 +33,13 @@ export const getWishLists = async (req, res) => {
   const user = await getAuthUser(req);
 
   const userId = user[0]?._id;
+
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
 
   const result = await WishListServices.getWishLists(userId);
 

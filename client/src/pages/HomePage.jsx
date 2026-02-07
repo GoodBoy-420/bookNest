@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
 
-import Search from "../assets/search.svg";
 import LatestBooks from "../components/books/FeaturedBooks";
 import { useBook } from "../hooks/useBook";
 
@@ -51,24 +50,8 @@ const HomePage = () => {
           Explore thousands of books from various genres. Curated just for book
           lovers.
         </p>
-        <div className="flex items-center gap-3 max-w-md w-full p-3 m-3">
-          <div className="flex items-center w-full border pl-3 gap-2 bg-white border-gray-500/30 h-11.5 rounded-md overflow-hidden">
-            <img src={Search} alt="search" width="20px" />
-            <input
-              type="text"
-              placeholder="Search for books"
-              className="w-full h-full outline-none text-gray-500 placeholder-gray-500 text-sm"
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-primary w-32 h-11.5 rounded-md text-sm text-white"
-          >
-            Search
-          </button>
-        </div>
       </section>
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-16 my-10">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-2xl font-semibold mb-8 text-center">
             Latest Books

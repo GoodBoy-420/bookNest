@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -15,12 +15,13 @@ export default function ErrorPage() {
       </p>
 
       <div className="flex items-center gap-4 mt-6">
-        <button
+        <Link
+          to="/"
           type="button"
           className="bg-indigo-500 hover:bg-indigo-600 px-7 py-2.5 text-white rounded active:scale-95 transition-all"
         >
           Go back home
-        </button>
+        </Link>
         <button
           type="button"
           className="group flex items-center gap-2 px-7 py-2.5 active:scale-95 transition"
