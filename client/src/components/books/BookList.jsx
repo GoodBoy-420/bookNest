@@ -1,3 +1,5 @@
+import Ratings from "./Ratings";
+
 const BookList = ({ book }) => {
   return (
     <div className="flex flex-col bg-white shadow-md w-72">
@@ -12,6 +14,9 @@ const BookList = ({ book }) => {
           {book.title}
         </p>
         <p className="text-slate-500">{book.description}</p>
+        <div className="flex py-2 my-2">
+          <Ratings rating={book.ratings} />
+        </div>
         <div className="grid grid-cols-2 gap-2 mt-3">
           <button className="bg-slate-100 text-slate-600 py-2">
             Add to cart
