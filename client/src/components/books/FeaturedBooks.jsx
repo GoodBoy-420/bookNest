@@ -1,3 +1,5 @@
+import Ratings from "./Ratings";
+
 const LatestBooks = ({ latestBooks }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -15,6 +17,9 @@ const LatestBooks = ({ latestBooks }) => {
             <p className="mt-2 font-semibold text-primary">
               Price- {book.price}
             </p>
+            <div className="flex">
+              <Ratings rating={book.ratings} />
+            </div>
           </div>
         );
       })}
