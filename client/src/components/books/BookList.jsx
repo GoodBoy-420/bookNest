@@ -21,7 +21,7 @@ const BookList = ({ book }) => {
         </div>
         <div className="grid grid-cols-2 gap-2 mt-3">
           <button
-            onClick={() => addToCart(book._id)}
+            onClick={() => addToCart(book._id, book.price, book.title)}
             className="bg-slate-100 text-slate-600 py-2"
           >
             Add to cart

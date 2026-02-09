@@ -12,7 +12,11 @@ export const getAuthUser = async (req) => {
     },
   ]);
 
-  if (!data || data.length == 0) throw new Error("User does not exists");
+  if (!data || data.length == 0) {
+    const err = new Error("User does not exists");
+    err.statusCode = 404;
+    throw err;
+  }
 
   return data;
 };

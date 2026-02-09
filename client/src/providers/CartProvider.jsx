@@ -1,12 +1,13 @@
-import axios from "axios";
 import { useEffect, useReducer } from "react";
+
 import { CartContext } from "../context";
 import { useAuth } from "../hooks/useAuth";
+import useAxios from "../hooks/useAxios";
 import { cartReducer, initialState } from "../reducers/cartReducer";
-
 const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
   const { auth } = useAuth();
+  const { api } = useAxios();
 
   /* ----------------------------------
      🟢 Restore guest cart on app load
@@ -54,7 +55,7 @@ const CartProvider = ({ children }) => {
       const guestItems = JSON.parse(localStorage.getItem("cart")) || [];
 
       if (guestItems.length > 0) {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/cart/sync`, {
+        await api.post(`${import.meta.env.VITE_BASE_URL}/cart/sync`, {
           items: guestItems.map((i) => ({
             book: i.book,
             quantity: i.quantity,
@@ -77,7 +78,7 @@ const CartProvider = ({ children }) => {
   /* ----------------------------------
      ➕ Add to cart (guest + auth)
   ---------------------------------- */
-  const addToCart = async (bookId, price) => {
+  const addToCart = async (bookId, price, title) => {
     // 👤 GUEST USER
     if (!auth?.user) {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -90,7 +91,8 @@ const CartProvider = ({ children }) => {
         cart.push({
           book: bookId,
           quantity: 1,
-          price, // frontend only
+          price,
+          title,
         });
       }
 
@@ -100,20 +102,11 @@ const CartProvider = ({ children }) => {
     }
 
     // 🔐 AUTH USER
-    const res = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/cart/add`,
-      {
-        bookId,
-        quantity: 1,
-      },
-      {
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5N2EzMGIxZjdkYTJiYjk0ZDNiNTAwNiIsImVtYWlsIjoicmlhZGlzbGFtOTExN0BnbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzcwNTM4ODI0LCJleHAiOjE3NzA1NDIxMjR9.rNqeO31byUyb5juo7unc6CEE6SX2yyVG-c_6xIqmoV0`,
-        },
-      },
-    );
-    console.log(res);
-
+    await api.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
+      bookId,
+      quantity: 1,
+    });
+    const res = await api.get("/cart");
     dispatch({ type: "cart_set", payload: res.data.data });
   };
 
@@ -132,7 +125,7 @@ const CartProvider = ({ children }) => {
       return;
     }
 
-    await axios.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
+    await api.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
       bookId,
       quantity,
     });
@@ -151,7 +144,7 @@ const CartProvider = ({ children }) => {
   return (
     <CartContext.Provider
       value={{
-        cart: state,
+        state,
         addToCart,
         updateQuantity,
         clearCart,

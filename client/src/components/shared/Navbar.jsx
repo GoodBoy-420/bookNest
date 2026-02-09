@@ -10,7 +10,7 @@ import { useCart } from "../../hooks/useCart";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { auth } = useAuth();
-  const { cart } = useCart();
+  const { state } = useCart();
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all relaitve">
@@ -34,7 +34,7 @@ const Navbar = () => {
             className="text-primary fill-current"
           />
           <span className="absolute -top-2 -right-3 text-xs text-white bg-primary w-4.5 h-4.5 rounded-full">
-            {cart.totalItems > 0 ? cart.totalItems : 0}
+            {state.totalItems > 0 ? state.totalItems : 0}
           </span>
         </Link>
 

@@ -13,7 +13,7 @@ const dataSchema = new Schema(
       {
         book: {
           type: Schema.Types.ObjectId,
-          ref: "Book",
+          ref: "books",
           required: true,
         },
         quantity: { type: Number, default: 1 },

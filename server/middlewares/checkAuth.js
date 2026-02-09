@@ -22,7 +22,9 @@ const checkAuth = (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    throw new Error("Token not found");
+    const err = new Error("Token not found");
+    err.statusCode = 401;
+    throw err;
   }
 
   jwt.verify(token, config.jwtoken.secretKey, (err, decoded) => {
