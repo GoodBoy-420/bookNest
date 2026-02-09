@@ -1,61 +1,19 @@
+import { Link } from "react-router-dom";
+
 import { useCart } from "../hooks/useCart.js";
 
 const CartPage = () => {
   const { state } = useCart();
   console.log(state);
+  console.log(state?.items[0]?.title);
+  console.log(state?.totalItems);
+  console.log(state?.totalPrice);
 
-  const products = [
-    {
-      name: "Running Shoes",
-      description: [
-        "Lightweight and comfortable",
-        "Breathable mesh upper",
-        "Ideal for jogging and casual wear",
-      ],
-      offerPrice: 250,
-      price: 200,
-      quantity: 1,
-      size: 42,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage.png",
-      category: "Footwear",
-    },
-    {
-      name: "Running Shoes",
-      description: [
-        "Lightweight and comfortable",
-        "Breathable mesh upper",
-        "Ideal for jogging and casual wear",
-      ],
-      offerPrice: 250,
-      price: 200,
-      quantity: 1,
-      size: 42,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage2.png",
-      category: "Footwear",
-    },
-    {
-      name: "Running Shoes",
-      description: [
-        "Lightweight and comfortable",
-        "Breathable mesh upper",
-        "Ideal for jogging and casual wear",
-      ],
-      offerPrice: 250,
-      price: 200,
-      quantity: 1,
-      size: 42,
-      image:
-        "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage3.png",
-      category: "Footwear",
-    },
-  ];
   return (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
-          Wishlist <span className="text-sm text-indigo-500">3 Items</span>
+          Cart List <span className="text-sm text-indigo-500">3 Items</span>
         </h1>
 
         <div className="grid grid-cols-[2fr_1fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -65,7 +23,7 @@ const CartPage = () => {
           <p className="text-center">Action</p>
         </div>
 
-        {products.map((product, index) => (
+        {state?.items?.map((item, index) => (
           <div
             key={index}
             className="grid grid-cols-[2fr_1fr_1fr_1fr] items-center text-gray-500 text-sm md:text-base font-medium pt-4"
@@ -73,26 +31,23 @@ const CartPage = () => {
             <div className="flex items-center gap-4">
               <div className="w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src="https://placehold.co/600x400"
+                  alt={item.title}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <p className="font-semibold">{product.name}</p>
+                <p className="font-semibold">{item.title}</p>
               </div>
             </div>
 
             <div className="text-center">
-              <p className="font-semibold text-gray-800">${product.price}</p>
-              <p className="text-sm line-through text-gray-400">
-                ${product.offerPrice}
-              </p>
+              <p className="font-semibold text-gray-800">${item.price}</p>
             </div>
 
             <div className="flex items-center justify-center gap-3">
               <button className="w-8 h-8 border border-gray-300">-</button>
-              <span>{product.quantity}</span>
+              <span>{item.quantity}</span>
               <button className="w-8 h-8 border border-gray-300">+</button>
             </div>
 
@@ -116,7 +71,10 @@ const CartPage = () => {
           </div>
         ))}
 
-        <button className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium">
+        <Link
+          to="/books"
+          className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium"
+        >
           <svg
             width="15"
             height="11"
@@ -133,7 +91,7 @@ const CartPage = () => {
             />
           </svg>
           Continue Shopping
-        </button>
+        </Link>
       </div>
 
       <div className="max-w-90 w-full bg-gray-100/40 p-5 max-md:mt-16 border border-gray-300/70">
@@ -143,11 +101,11 @@ const CartPage = () => {
         <div className="text-gray-500 space-y-3">
           <p className="flex justify-between">
             <span>Total Items</span>
-            <span>3</span>
+            <span> {state.totalItems} </span>
           </p>
           <p className="flex justify-between">
             <span>Estimated Price</span>
-            <span>$120</span>
+            <span> {state.totalPrice} </span>
           </p>
         </div>
 
