@@ -4,10 +4,6 @@ import { useCart } from "../hooks/useCart.js";
 
 const CartPage = () => {
   const { state } = useCart();
-  console.log(state);
-  console.log(state?.items[0]?.title);
-  console.log(state?.totalItems);
-  console.log(state?.totalPrice);
 
   return (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
@@ -37,12 +33,14 @@ const CartPage = () => {
                 />
               </div>
               <div>
-                <p className="font-semibold">{item.title}</p>
+                <p className="font-semibold">{item.title ?? item.book.title}</p>
               </div>
             </div>
 
             <div className="text-center">
-              <p className="font-semibold text-gray-800">${item.price}</p>
+              <p className="font-semibold text-gray-800">
+                ${item.price ?? item.book.price}
+              </p>
             </div>
 
             <div className="flex items-center justify-center gap-3">

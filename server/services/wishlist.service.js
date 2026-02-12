@@ -72,12 +72,6 @@ const getWishLists = async (userId) => {
     projectStage,
   ]);
 
-  if (!wishList || wishList.length == 0) {
-    const err = new Error("No wishLists found.");
-    err.statusCode = 404;
-    throw err;
-  }
-
   return wishList;
 };
 

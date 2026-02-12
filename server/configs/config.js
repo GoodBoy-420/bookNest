@@ -5,7 +5,7 @@ const dev = {
     port: process.env.PORT || 8080,
   },
   db: {
-    url: String(process.env.MONGO_URL),
+    url: process.env.MONGO_URL,
   },
   dns: {
     port: process.env.DNS_SERVER,
@@ -36,6 +36,11 @@ const dev = {
     cloudName: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
+  },
+
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   },
 };
 

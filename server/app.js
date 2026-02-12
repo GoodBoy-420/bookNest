@@ -7,6 +7,7 @@ import helmet from "helmet";
 import hpp from "hpp";
 
 import config from "./configs/config.js";
+import { stripeWebhookController } from "./controllers/webhook.controller.js";
 import checkAuth from "./middlewares/checkAuth.js";
 import customRoutes from "./routes/index.router.js";
 
@@ -20,6 +21,12 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
+
+app.post(
+  "/api/v1/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhookController,
+);
 
 app.use(express.json({ limit: config.limit.maxJsonSize }));
 app.use(
