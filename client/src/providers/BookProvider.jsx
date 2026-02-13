@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import { BookContext } from "../context";
-import { bookReducer, initialState } from "../reducers/BookReducer";
+import { bookReducer, initialState } from "../reducers/bookReducer";
 
 const BookProvider = ({ children }) => {
   const [state, dispatch] = useReducer(bookReducer, initialState);
