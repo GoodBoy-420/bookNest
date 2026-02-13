@@ -18,7 +18,7 @@ const SuccessPage = () => {
 
         setTimeout(() => {
           navigate("/profile");
-        }, 1500);
+        }, 1000);
       } catch (err) {
         console.log(err);
       }
