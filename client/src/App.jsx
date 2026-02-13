@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
+import SuccessPage from "./pages/SuccessPage";
 import WishListPage from "./pages/WishListPage";
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "wish-list",
         element: <WishListPage />,
+      },
+      {
+        path: "success",
+        element: <SuccessPage />,
       },
     ],
   },

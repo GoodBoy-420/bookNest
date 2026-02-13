@@ -36,7 +36,7 @@ const dataSchema = new Schema(
     },
     stripeSessionId: String,
   },
-  { timestamps: true, versionkeyK: false },
+  { timestamps: true, versionkey: false },
 );
 
 export const OrderModel = mongoose.model("orders", dataSchema);

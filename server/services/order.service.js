@@ -47,7 +47,7 @@ const createCheckoutSession = async (userId, address) => {
     paymentStatus: "pending",
     stripeSessionId: session.id,
   });
-  return newOrder;
+  return { url: session.url };
 };
 
 const getMyOrders = async (userId) => {
