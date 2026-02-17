@@ -2,13 +2,13 @@
   "name": "papertrail",
   "version": "1.0.0",
   "description": "A website to buy exclusive books",
-  "homepage": "https://github.com/GoodBoy-420/paperTrail#readme",
+  "homepage": "https://github.com/GoodBoy-420/bookNest.git#readme",
   "bugs": {
-    "url": "https://github.com/GoodBoy-420/paperTrail/issues"
+    "url": "https://github.com/GoodBoy-420/bookNest.git/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GoodBoy-420/paperTrail.git"
+    "url": "git+https://github.com/GoodBoy-420/bookNest.git.git"
   },
   "license": "MIT",
   "author": "Redwan Islam",
