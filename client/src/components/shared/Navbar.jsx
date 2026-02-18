@@ -23,8 +23,10 @@ const Navbar = () => {
         <Link to="/books" className="hover:text-primary">
           Books
         </Link>
-        <Link className="hover:text-primary">About</Link>
-        <Link className="hover:text-primary">Contact</Link>
+
+        <Link to="/contact" className="hover:text-primary">
+          Contact
+        </Link>
 
         <Link to="cart" className="relative cursor-pointer">
           <img
@@ -33,7 +35,7 @@ const Navbar = () => {
             width="23px"
             className="text-primary fill-current"
           />
-          <span className="absolute -top-2 -right-3 text-xs text-white bg-primary w-4.5 h-4.5 rounded-full">
+          <span className="absolute -top-2 -right-3 text-xs text-white bg-primary w-4.5 h-4.5 rounded-full flex items-center justify-center pl-0.2">
             {state.totalItems > 0 ? state.totalItems : 0}
           </span>
         </Link>
