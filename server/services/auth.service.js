@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import config from "../configs/config.js";
 import { sendEmail } from "../libs/sendEmail.js";
 import { UserModel } from "../models/user.model.js";
 import getNewToken from "../utils/getNewToken.js";
