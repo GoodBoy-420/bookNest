@@ -31,7 +31,12 @@ const getAllBooks = async (req, res) => {
 const getSingleBook = async (req, res) => {
   let bookId = req.params.bookId;
 
-  if (!bookId) throw new Error("Book not found");
+  if (!bookId) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
 
   const result = await BookServices.getSingleBook(bookId);
 
@@ -45,7 +50,12 @@ const postBook = async (req, res) => {
   const user = await getAuthUser(req);
 
   if (user[0].role !== "admin") {
-    throw new Error("Book posting is not possible with this role");
+    {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized admin",
+      });
+    }
   }
 
   let postBook = await BookServices.postBook(user, req);
@@ -61,7 +71,12 @@ const postBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   const bookId = req.params.bookId;
 
-  if (!bookId) throw new Error("Book not found");
+  if (!bookId) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
 
   const deleteBook = await BookServices.deleteBook(bookId);
 
@@ -80,12 +95,21 @@ const updateBook = async (req, res) => {
 
   const updateData = req.body;
 
-  if (!bookId) throw new Error("Book not found");
+  if (!bookId) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
 
   const updateBook = await BookServices.updateBook(bookId, updateData, user);
 
-  if (!updateBook)
-    throw new Error("Book not found or not authorized to update");
+  if (!updateBook) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
 
   res.status(200).send({
     success: true,
