@@ -1,3 +1,4 @@
+import ButtonsBooks from "./ButtonsBooks";
 import Ratings from "./Ratings";
 
 const LatestBooks = ({ latestBooks }) => {
@@ -7,18 +8,23 @@ const LatestBooks = ({ latestBooks }) => {
         return (
           <div
             key={book._id}
-            className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4"
+            className="flex flex-col bg-white w-72 shadow-sm hover:shadow-md"
           >
-            <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
-            <h4 className="font-medium text-lg">
-              {book.title.slice(0, 28)} ...
-            </h4>
-            <p className="text-sm text-gray-500"> {book.author} </p>
-            <p className="mt-2 font-semibold text-primary">
-              Price- {book.price}
-            </p>
-            <div className="flex">
-              <Ratings rating={book.ratings} />
+            <img
+              className="w-72 h-48 object-cover"
+              src="https://images.unsplash.com/photo-1657560566744-06d0b69f6647?q=80&w=600&auto=format&fit=crop"
+              alt="image"
+            />
+            <div className="p-4 text-sm">
+              <p className="text-slate-600"> $ {book.price} </p>
+              <p className="text-slate-800 text-base font-medium my-1.5">
+                {book.title.slice(0, 28)}
+              </p>
+              <p className="text-slate-500">{book.description.slice(0, 30)}</p>
+              <div className="flex py-2 my-2">
+                <Ratings rating={book.ratings} />
+              </div>
+              <ButtonsBooks book={book} />
             </div>
           </div>
         );

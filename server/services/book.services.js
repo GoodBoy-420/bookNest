@@ -103,7 +103,6 @@ const getSingleBook = async (bookId) => {
 
     {
       $project: {
-        _id: 0,
         stock: 0,
         createdAt: 0,
         updatedAt: 0,

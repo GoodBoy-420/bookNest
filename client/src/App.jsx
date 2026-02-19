@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import GetSingleBook from "./components/books/GetSingleBook";
 import MainLayout from "./components/shared/MainLayout";
 import BooksPage from "./pages/BooksPage";
 import CartPage from "./pages/CartPage";
+import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -25,8 +27,16 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
+        path: "contact",
+        element: <ContactPage />,
+      },
+      {
         path: "books",
         element: <BooksPage />,
+      },
+      {
+        path: "book/:bookId",
+        element: <GetSingleBook />,
       },
       {
         path: "signup",

@@ -1,4 +1,5 @@
 import { useCart } from "../../hooks/useCart";
+import ButtonsBooks from "./ButtonsBooks";
 import Ratings from "./Ratings";
 
 const BookList = ({ book }) => {
@@ -11,7 +12,7 @@ const BookList = ({ book }) => {
         alt="image"
       />
       <div className="p-4 text-sm">
-        <p className="text-slate-600"> {book.price} </p>
+        <p className="text-slate-600">$ {book.price} </p>
         <p className="text-slate-800 text-base font-medium my-1.5">
           {book.title.slice(0, 28)}
         </p>
@@ -19,15 +20,7 @@ const BookList = ({ book }) => {
         <div className="flex py-2 my-2">
           <Ratings rating={book.ratings} />
         </div>
-        <div className="grid grid-cols-2 gap-2 mt-3">
-          <button
-            onClick={() => addToCart(book._id, book.price, book.title)}
-            className="bg-slate-100 text-slate-600 py-2"
-          >
-            Add to cart
-          </button>
-          <button className="bg-slate-800 text-white py-2">Buy now</button>
-        </div>
+        <ButtonsBooks book={book} />
       </div>
     </div>
   );

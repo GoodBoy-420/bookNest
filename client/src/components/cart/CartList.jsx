@@ -1,7 +1,6 @@
 const CartList = ({ item }) => {
   return (
     <>
-      {" "}
       <div className="flex items-center gap-4">
         <div className="w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
           <img
