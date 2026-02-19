@@ -1,3 +1,4 @@
+import config from "../configs/config.js";
 import * as AuthServices from "../services/auth.service.js";
 
 const register = async (req, res) => {
@@ -29,14 +30,27 @@ const login = async (req, res) => {
   }
   const result = await AuthServices.login(email, password);
 
+  // Set refresh token in httpOnly cookie
+  res.cookie("refreshToken", result.token.refreshToken, {
+    httpOnly: true,
+    secure: config.cookie.secure,
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  });
+
   res.status(200).send({
     success: true,
-    data: result,
+    data: {
+      user: result.user,
+      accessToken: result.token.token,
+    },
   });
 };
 
 const refreshToken = async (req, res) => {
-  const { refreshToken } = req.body || "";
+  console.log(req.cookies);
+
+  const refreshToken = req.cookies.refreshToken;
 
   if (!refreshToken) {
     return res.status(404).json({
@@ -47,9 +61,27 @@ const refreshToken = async (req, res) => {
 
   const result = await AuthServices.refreshToken(refreshToken);
 
+  console.log(result);
+
   res.status(200).send({
     seuccess: true,
-    data: result,
+    data: {
+      accessToken: result.token.token,
+      user: result.user,
+    },
+  });
+};
+
+const logout = async (req, res) => {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: config.cookie.secure,
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
   });
 };
 
@@ -109,4 +141,12 @@ const resetPassword = async (req, res) => {
   });
 };
 
-export { emailVerify, login, otpVerify, refreshToken, register, resetPassword };
+export {
+  emailVerify,
+  login,
+  logout,
+  otpVerify,
+  refreshToken,
+  register,
+  resetPassword,
+};

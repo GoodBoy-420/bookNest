@@ -75,10 +75,14 @@ const refreshToken = async (refreshToken) => {
     err.statusCode = 401;
     throw err;
   }
+  user.password = undefined;
+  user.otp = undefined;
+  user.password = undefined;
+  user._id = undefined;
 
   const token = getNewToken(user);
 
-  return token;
+  return { token, user };
 };
 
 const emailVerify = async (email) => {

@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route("/register").post(catchAsync(AuthController.register));
 router.route("/login").post(catchAsync(AuthController.login));
+router.route("/logout").post(catchAsync(AuthController.logout));
 router.route("/refresh-token").post(catchAsync(AuthController.refreshToken));
 
 router.route("/email-verify").post(catchAsync(AuthController.emailVerify));

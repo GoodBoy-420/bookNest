@@ -8,6 +8,7 @@ const checkAuth = (req, res, next) => {
     req.path === "/api/v1/auth/refresh-token" ||
     req.path === "/api/v1/auth/register" ||
     req.path === "/api/v1/auth/login" ||
+    req.path === "/api/v1/auth/logout" ||
     req.path === "/api/v1/auth/email-verify" ||
     req.path === "/api/v1/book/get-all" ||
     req.path === "/api/v1/book/get-featured" ||

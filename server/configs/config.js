@@ -7,6 +7,9 @@ const dev = {
   db: {
     url: process.env.MONGO_URL,
   },
+  cookie: {
+    secure: process.env.COOKIE_SECURITY,
+  },
   dns: {
     port: process.env.DNS_SERVER,
   },
