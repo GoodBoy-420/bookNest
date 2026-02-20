@@ -30,12 +30,14 @@ const LoginForm = () => {
       }
 
       const { user, token } = data.data;
-
-      setAuth({
+      const authData = {
         user,
         authToken: token.token,
         refreshToken: token.refreshToken,
-      });
+      };
+
+      setAuth(authData);
+      localStorage.setItem("booknest_auth", JSON.stringify(authData));
 
       navigate("/");
     } catch (error) {

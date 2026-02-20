@@ -18,7 +18,7 @@ const ProfilePage = () => {
     };
 
     fetchBooks();
-  }, [order]);
+  }, []);
   console.log(order);
   return <div>ProfilePage</div>;
 };

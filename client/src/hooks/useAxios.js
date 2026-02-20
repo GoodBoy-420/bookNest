@@ -36,9 +36,17 @@ const useAxios = () => {
               `${import.meta.env.VITE_BASE_URL}/auth/refresh-token`,
               { refreshToken },
             );
-            const { token } = response.data;
+            const { token } = response.data.data;
+            console.log(response.data);
 
-            setAuth({ ...auth, authToken: token });
+            const updatedAuth = {
+              ...auth,
+              authToken: token.token,
+              refreshToken: token.refreshToken,
+            };
+            setAuth(updatedAuth);
+
+            localStorage.setItem("booknest_auth", JSON.stringify(updatedAuth));
 
             // Retry the original request with the new token
             originalRequest.headers.Authorization = `Bearer ${token}`;

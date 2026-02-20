@@ -1,65 +1,67 @@
 const ContactPage = () => {
   return (
-    <div class="max-w-7xl max-lg:max-w-3xl mx-auto p-4 md:p-8">
-      <div class="grid lg:grid-cols-2 gap-8 items-start">
-        <div class="bg-gray-50 rounded-lg p-8 border border-gray-200">
-          <h2 class="text-3xl font-bold text-slate-900 mb-4">Get in touch</h2>
-          <p class="text-slate-600 text-[15px] mb-8 leading-relaxed">
+    <div className="max-w-7xl max-lg:max-w-3xl mx-auto p-4 md:p-8">
+      <div className="grid lg:grid-cols-2 gap-8 items-start">
+        <div className="bg-gray-50 rounded-lg p-8 border border-gray-200">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">
+            Get in touch
+          </h2>
+          <p className="text-slate-600 text-[15px] mb-8 leading-relaxed">
             Feel free to contact us and we will get back to you as soon as
             possible
           </p>
 
-          <div class="space-y-6">
+          <div className="space-y-6">
             <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
                 Name
               </label>
               <input
                 type="text"
                 placeholder="Name"
-                class="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-indigo-500 outline-0"
+                className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-primary outline-0"
               />
             </div>
             <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
                 Email
               </label>
               <input
                 type="email"
                 placeholder="E-mail"
-                class="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-indigo-500 outline-0"
+                className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-primary outline-0"
               />
             </div>
             <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
                 Message
               </label>
               <textarea
                 placeholder="Message"
                 rows="4"
-                class="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-indigo-500 outline-0"
+                className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-sm text-slate-900 focus:border-primary outline-0"
               ></textarea>
             </div>
             <button
               type="button"
-              class="w-full text-sm bg-indigo-700 hover:bg-slate-900 text-white font-medium py-3 px-6 rounded-lg transition-colors border-0 cursor-pointer"
+              className="w-full text-sm bg-primary hover:bg-cyan-800 text-white font-medium py-3 px-6 rounded-lg transition-colors border-0 cursor-pointer"
             >
               Send message
             </button>
           </div>
         </div>
 
-        <div class="space-y-8">
-          <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-            <h3 class="text-xl font-semibold text-slate-900 mb-8">
+        <div className="space-y-8">
+          <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <h3 className="text-xl font-semibold text-slate-900 mb-8">
               Contact Information
             </h3>
 
-            <div class="space-y-6">
-              <div class="flex items-start space-x-3">
+            <div className="space-y-6">
+              <div className="flex items-start space-x-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 fill-indigo-700"
+                  className="w-5 h-5 fill-primary"
                   viewBox="0 0 64 64"
                 >
                   <path
@@ -68,20 +70,20 @@ const ContactPage = () => {
                   />
                 </svg>
                 <div>
-                  <h4 class="font-semibold text-indigo-700 text-sm mb-2">
+                  <h4 className="font-semibold text-primary text-sm mb-2">
                     Our Location
                   </h4>
-                  <p class="text-slate-600 text-sm">123 Business Street</p>
-                  <p class="text-slate-600 text-[13px] mt-0.5">
+                  <p className="text-slate-600 text-sm">123 Business Street</p>
+                  <p className="text-slate-600 text-[13px] mt-0.5">
                     New York, NY 10001
                   </p>
                 </div>
               </div>
 
-              <div class="flex items-start space-x-3">
+              <div className="flex items-start space-x-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 fill-indigo-700"
+                  className="w-5 h-5 fill-primary"
                   viewBox="0 0 513.64 513.64"
                 >
                   <path
@@ -90,17 +92,19 @@ const ContactPage = () => {
                   />
                 </svg>
                 <div>
-                  <h4 class="font-semibold text-indigo-700 text-sm mb-2">
+                  <h4 className="font-semibold text-primary text-sm mb-2">
                     Phone Number
                   </h4>
-                  <p class="text-slate-600 text-[13px]">+1 (555) 123-4567</p>
+                  <p className="text-slate-600 text-[13px]">
+                    +1 (555) 123-4567
+                  </p>
                 </div>
               </div>
 
-              <div class="flex items-start space-x-3">
+              <div className="flex items-start space-x-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 fill-indigo-700"
+                  className="w-5 h-5 fill-primary"
                   viewBox="0 0 512 512"
                 >
                   <path
@@ -113,31 +117,37 @@ const ContactPage = () => {
                   />
                 </svg>
                 <div>
-                  <h4 class="font-semibold text-indigo-700 text-sm mb-2">
+                  <h4 className="font-semibold text-primary text-sm mb-2">
                     Email Address
                   </h4>
-                  <p class="text-slate-600 text-[13px]">contact@business.com</p>
+                  <p className="text-slate-600 text-[13px]">
+                    contact@business.com
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-            <h3 class="text-xl font-semibold text-slate-900 mb-8">
+          <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <h3 className="text-xl font-semibold text-slate-900 mb-8">
               Hours of Operation
             </h3>
-            <div class="space-y-4">
-              <div class="flex justify-between gap-4 flex-wrap">
-                <span class="text-slate-600 text-sm">Monday - Friday</span>
-                <span class="text-slate-900 text-sm">9:00 AM - 6:00 PM</span>
+            <div className="space-y-4">
+              <div className="flex justify-between gap-4 flex-wrap">
+                <span className="text-slate-600 text-sm">Monday - Friday</span>
+                <span className="text-slate-900 text-sm">
+                  9:00 AM - 6:00 PM
+                </span>
               </div>
-              <div class="flex justify-between gap-4 flex-wrap">
-                <span class="text-slate-600 text-sm">Saturday</span>
-                <span class="text-slate-900 text-sm">10:00 AM - 4:00 PM</span>
+              <div className="flex justify-between gap-4 flex-wrap">
+                <span className="text-slate-600 text-sm">Saturday</span>
+                <span className="text-slate-900 text-sm">
+                  10:00 AM - 4:00 PM
+                </span>
               </div>
-              <div class="flex justify-between gap-4 flex-wrap">
-                <span class="text-slate-600 text-sm">Sunday</span>
-                <span class="text-slate-900 text-sm">Closed</span>
+              <div className="flex justify-between gap-4 flex-wrap">
+                <span className="text-slate-600 text-sm">Sunday</span>
+                <span className="text-slate-900 text-sm">Closed</span>
               </div>
             </div>
           </div>
