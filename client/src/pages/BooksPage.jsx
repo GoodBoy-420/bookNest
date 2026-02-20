@@ -61,68 +61,120 @@ const BooksPage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-800">
       <section className="max-w-7xl mx-auto px-4 py-10">
-        <div className="mb-6">
-          <input
-            value={keyword}
-            onChange={(e) => updateParams({ keyword: e.target.value })}
-            type="text"
-            placeholder="Search books, authors..."
-            className="w-full md:w-1/2 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-          />
-        </div>
+        <div className="flex flex-col md:flex-row gap-5">
+          {/* Sidebar */}
+          <div className="w-full md:max-w-55 shrink-0 shadow-md px-6 py-6 h-fit">
+            <div className="flex items-center border-b border-gray-300 pb-3 mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
 
-        <div className="flex flex-col md:flex-row gap-4 mb-10">
-          <select
-            multiple
-            className="px-4 py-2 border rounded-lg"
-            onChange={(e) =>
-              updateParams({
-                categories: [...e.target.selectedOptions]
-                  .map((o) => o.value)
-                  .join(","),
-              })
-            }
-          >
-            {state?.books?.map((book) => {
-              <option key={book._id} value={book.category}>
-                {book.category}
-              </option>;
-            })}
-          </select>
+              <button
+                onClick={() =>
+                  updateParams({
+                    categories: "",
+                    author: "",
+                    keyword: "",
+                    page: 1,
+                  })
+                }
+                className="ml-auto text-gray-500 hover:text-red-500 text-lg font-semibold"
+              >
+                ×
+              </button>
+            </div>
 
-          <select
-            onChange={(e) => updateParams({ author: e.target.value })}
-            className="px-4 py-2 border rounded-lg"
-          >
-            {state?.books?.map((book) => {
-              <option key={book._id} value={book.author}>
-                {book.author}
-              </option>;
-            })}
-          </select>
+            <div className="mb-6">
+              <h6 className="text-sm font-semibold text-gray-900 mb-3">
+                Categories
+              </h6>
+              <ul className="space-y-3">
+                {[...new Set(state?.books?.map((b) => b.category))].map(
+                  (category, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        value={category}
+                        onChange={(e) => {
+                          const selected = searchParams.get("categories")
+                            ? searchParams.get("categories").split(",")
+                            : [];
 
-          <input
-            type="range"
-            min="0"
-            max="100"
-            onChange={(e) =>
-              updateParams({ minPrice: 0, maxPrice: e.target.value })
-            }
-          />
-        </div>
+                          if (e.target.checked) {
+                            selected.push(category);
+                          } else {
+                            const i = selected.indexOf(category);
+                            if (i > -1) selected.splice(i, 1);
+                          }
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {state?.books?.map((book) => (
-            <BookList key={book._id} book={book} />
-          ))}
+                          updateParams({ categories: selected.join(",") });
+                        }}
+                        className="w-4 h-4"
+                      />
+                      <label className="text-sm text-gray-600">
+                        {category}
+                      </label>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
 
-          <Pagination
-            page={state?.page}
-            totalPages={state?.totalPages}
-            onPageChange={(p) =>
-              setSearchParams({ ...Object.fromEntries(searchParams), page: p })
-            }
-          />
+            <hr className="my-6 border-gray-300" />
+
+            <div>
+              <h6 className="text-sm font-semibold text-gray-900 mb-3">
+                Authors
+              </h6>
+              <ul className="space-y-3">
+                {[...new Set(state?.books?.map((b) => b.author))].map(
+                  (author, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name="author"
+                        value={author}
+                        onChange={(e) =>
+                          updateParams({ author: e.target.value })
+                        }
+                        className="w-4 h-4"
+                      />
+                      <label className="text-sm text-gray-600">{author}</label>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex-1">
+            <div className="mb-6">
+              <input
+                value={keyword}
+                onChange={(e) => updateParams({ keyword: e.target.value })}
+                type="text"
+                placeholder="Search books, description..."
+                className="w-full md:w-1/2 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {state?.books?.map((book) => (
+                <BookList key={book._id} book={book} />
+              ))}
+            </div>
+
+            <div className="mt-8">
+              <Pagination
+                page={state?.page}
+                totalPages={state?.totalPages}
+                onPageChange={(p) =>
+                  setSearchParams({
+                    ...Object.fromEntries(searchParams),
+                    page: p,
+                  })
+                }
+              />
+            </div>
+          </div>
         </div>
       </section>
     </div>

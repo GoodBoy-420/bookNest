@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import GetSingleBook from "./components/books/GetSingleBook";
 import MainLayout from "./components/shared/MainLayout";
 import BooksPage from "./pages/BooksPage";
 import CartPage from "./pages/CartPage";
 import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
+import GetSingleBook from "./pages/GetSingleBook";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
