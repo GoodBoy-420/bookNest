@@ -9,6 +9,10 @@ const CartPage = () => {
   const { state } = useCart();
   const [showModal, setShowModal] = useState(false);
 
+  if (state.totalItems <= 0) {
+    return <p>Cart is empty</p>;
+  }
+
   return (
     <>
       {showModal && <CheckoutModal onClose={() => setShowModal(false)} />}
@@ -16,7 +20,10 @@ const CartPage = () => {
       <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
         <div className="flex-1 max-w-4xl">
           <h1 className="text-3xl font-medium mb-6">
-            Cart List <span className="text-sm text-indigo-500">3 Items</span>
+            Cart List{" "}
+            <span className="text-sm text-indigo-500">
+              {state.totalItems > 0 ? state.totalItems : ""}
+            </span>
           </h1>
 
           <div className="grid grid-cols-[2fr_1fr_1fr_1fr] text-gray-500 text-base font-medium pb-3">
@@ -37,7 +44,7 @@ const CartPage = () => {
 
           <Link
             to="/books"
-            className="group cursor-pointer flex items-center mt-8 gap-2 text-indigo-500 font-medium"
+            className="group cursor-pointer flex items-center mt-8 gap-2 text-primary font-medium"
           >
             <svg
               width="15"
@@ -75,7 +82,7 @@ const CartPage = () => {
 
           <button
             onClick={() => setShowModal(true)}
-            className="w-full py-3 mt-6 bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+            className="w-full py-3 mt-6 bg-primary hover:bg-cyan-800 text-white font-medium transition"
           >
             Checkout
           </button>
