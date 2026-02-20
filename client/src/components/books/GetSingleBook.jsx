@@ -30,7 +30,7 @@ const GetSingleBook = () => {
             <div className="flex flex-col gap-4">
               <div className="bg-white shadow-sm p-2">
                 <img
-                  src="https://readymadeui.com/images/sunscreen-img-1.webp"
+                  src="https://placehold.co/600x400"
                   alt="Product"
                   className="w-full  aspect-11/8 object-cover object-top"
                 />
