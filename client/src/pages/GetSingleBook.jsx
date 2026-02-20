@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Ratings from "./Ratings";
+
+import Ratings from "../components/books/Ratings";
+import { useCart } from "../hooks/useCart";
 
 const GetSingleBook = () => {
   let { bookId } = useParams();
   const [book, setBook] = useState([]);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -62,7 +65,7 @@ const GetSingleBook = () => {
                 </div>
 
                 <div className="flex items-center flex-wrap gap-2 mt-6">
-                  <h4 className="text-purple-800 text-2xl sm:text-3xl font-semibold">
+                  <h4 className="text-primary text-2xl sm:text-3xl font-semibold">
                     ${book[0]?.price}
                   </h4>
                 </div>
@@ -74,8 +77,11 @@ const GetSingleBook = () => {
             <div>
               <div className="mt-4 flex flex-wrap gap-4">
                 <button
+                  onClick={() =>
+                    addToCart(book[0]._id, book[0].price, book[0].title)
+                  }
                   type="button"
-                  className="px-4 py-3 w-[45%] cursor-pointer border border-gray-300 bg-white hover:bg-slate-50 text-slate-900 text-sm font-medium"
+                  className="px-4 py-3 w-[45%] cursor-pointer border border-gray-300 bg-white hover:bg-cyan-800 text-slate-900 text-sm font-medium"
                 >
                   Add to cart
                 </button>
