@@ -24,7 +24,7 @@ app.use(limiter);
 
 app.post(
   "/api/v1/stripe/webhook",
-  express.raw({ type: "application/json" }),
+  express.raw({ type: "*/*" }),
   stripeWebhookController,
 );
 
