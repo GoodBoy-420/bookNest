@@ -13,7 +13,9 @@ const ButtonsBooks = ({ book }) => {
         Details
       </Link>
       <button
-        onClick={() => addToCart(book._id, book.price, book.title)}
+        onClick={() =>
+          addToCart(book._id, book.price, book.title, book.coverImage)
+        }
         className="bg-slate-100 hover:bg-cyan-600 text-white-600 py-2 cursor-pointer"
       >
         Add to cart

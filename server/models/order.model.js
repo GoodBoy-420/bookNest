@@ -12,6 +12,7 @@ const dataSchema = new Schema(
         book: { type: mongoose.Schema.Types.ObjectId, ref: "books" },
         quantity: Number,
         price: Number,
+        coverImage: String,
       },
     ],
     shippingAddress: {

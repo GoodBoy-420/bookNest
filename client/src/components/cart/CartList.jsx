@@ -4,7 +4,7 @@ const CartList = ({ item }) => {
       <div className="flex items-center gap-4">
         <div className="w-24 h-24 flex items-center justify-center border border-gray-300 rounded overflow-hidden">
           <img
-            src="https://placehold.co/600x400"
+            src={item.image ?? item.coverImage}
             alt={item.title}
             className="w-full h-full object-cover"
           />

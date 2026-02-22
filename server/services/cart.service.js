@@ -34,6 +34,7 @@ const syncCart = async (userId, guestItems) => {
         book: item.book,
         quantity: item.quantity,
         priceAtPurchase: book.price,
+        coverImage: item.coverImage,
       });
     }
   }
@@ -44,7 +45,7 @@ const syncCart = async (userId, guestItems) => {
   return cart;
 };
 
-const addToCart = async (userId, bookId, quantity) => {
+const addToCart = async (userId, bookId, quantity, image) => {
   const book = await BookModel.findById(bookId);
   if (!book) {
     const err = new Error("Book Not Found or might be deleted.");
@@ -74,6 +75,7 @@ const addToCart = async (userId, bookId, quantity) => {
       book: bookId,
       quantity,
       priceAtPurchase: book.price,
+      coverImage: image,
     });
   }
 

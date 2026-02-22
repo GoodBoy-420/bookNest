@@ -59,6 +59,7 @@ const CartProvider = ({ children }) => {
           items: guestItems.map((i) => ({
             book: i.book,
             quantity: i.quantity,
+            coverImage: i.image,
           })),
         });
 
@@ -78,7 +79,7 @@ const CartProvider = ({ children }) => {
   /* ----------------------------------
      ➕ Add to cart (guest + auth)
   ---------------------------------- */
-  const addToCart = async (bookId, price, title) => {
+  const addToCart = async (bookId, price, title, image) => {
     // 👤 GUEST USER
     if (!auth?.user) {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -93,6 +94,7 @@ const CartProvider = ({ children }) => {
           quantity: 1,
           price,
           title,
+          image,
         });
       }
 
@@ -105,6 +107,7 @@ const CartProvider = ({ children }) => {
     await api.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
       bookId,
       quantity: 1,
+      image,
     });
     const res = await api.get("/cart");
     dispatch({ type: "cart_set", payload: res.data.data });

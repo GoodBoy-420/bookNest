@@ -27,22 +27,22 @@ const GetSingleBook = () => {
 
   return (
     <div className="p-4 bg-gray-100">
-      <div className="lg:max-w-6xl max-w-xl mx-auto">
-        <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8 max-lg:gap-12 max-sm:gap-8">
-          <div className="w-full lg:sticky top-0">
-            <div className="flex flex-col gap-4">
-              <div className="bg-white shadow-sm p-2">
-                <img
-                  src="https://placehold.co/600x400"
-                  alt="Product"
-                  className="w-full  aspect-11/8 object-cover object-top"
-                />
+      {book && book.length > 0 && (
+        <div className="lg:max-w-6xl max-w-xl mx-auto">
+          <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-8 max-lg:gap-12 max-sm:gap-8">
+            <div className="w-full lg:sticky top-0">
+              <div className="flex flex-col gap-4">
+                <div className="bg-white shadow-sm p-2">
+                  <img
+                    src={book[0].coverImage}
+                    alt="Product"
+                    className="w-full  aspect-11/8 object-cover"
+                  />
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="w-full">
-            {book && book.length > 0 && (
+            <div className="w-full">
               <div>
                 <h3 className="text-lg sm:text-xl font-semibold text-slate-900">
                   {book[0]?.title}
@@ -70,34 +70,34 @@ const GetSingleBook = () => {
                   </h4>
                 </div>
               </div>
-            )}
 
-            <hr className="my-6 border-gray-300" />
+              <hr className="my-6 border-gray-300" />
 
-            <div>
-              <div className="mt-4 flex flex-wrap gap-4">
-                <button
-                  onClick={() =>
-                    addToCart(book[0]._id, book[0].price, book[0].title)
-                  }
-                  type="button"
-                  className="px-4 py-3 w-[45%] cursor-pointer border border-gray-300 bg-white hover:bg-cyan-800 text-slate-900 text-sm font-medium"
-                >
-                  Add to cart
-                </button>
-                {/* <button
+              <div>
+                <div className="mt-4 flex flex-wrap gap-4">
+                  <button
+                    onClick={() =>
+                      addToCart(book[0]._id, book[0].price, book[0].title)
+                    }
+                    type="button"
+                    className="px-4 py-3 w-[45%] cursor-pointer border border-gray-300 bg-white hover:bg-cyan-800 text-slate-900 text-sm font-medium"
+                  >
+                    Add to cart
+                  </button>
+                  {/* <button
                   type="button"
                   className="px-4 py-3 w-[45%] cursor-pointer border border-purple-600 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium"
                 >
                   Buy it now
                 </button> */}
+                </div>
               </div>
-            </div>
 
-            <hr className="my-6 border-gray-300" />
+              <hr className="my-6 border-gray-300" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

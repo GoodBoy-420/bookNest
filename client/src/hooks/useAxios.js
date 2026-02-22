@@ -37,7 +37,6 @@ const useAxios = () => {
               { refreshToken },
             );
             const { token } = response.data.data;
-            console.log(response.data);
 
             const updatedAuth = {
               ...auth,
