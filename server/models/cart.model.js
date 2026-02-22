@@ -18,6 +18,7 @@ const dataSchema = new Schema(
         },
         quantity: { type: Number, default: 1 },
         priceAtPurchase: { type: Number, required: true },
+        coverImage: String,
       },
     ],
 

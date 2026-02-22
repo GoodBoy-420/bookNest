@@ -25,10 +25,9 @@ const dataSchema = new Schema(
       default: 0,
     },
 
-    // coverImage: {
-    //   type: String,
-    //   required: true,
-    // },
+    coverImage: {
+      type: String,
+    },
     category: {
       type: String,
     },

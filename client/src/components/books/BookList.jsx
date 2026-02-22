@@ -7,7 +7,7 @@ const BookList = ({ book }) => {
       <div className="flex flex-col bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden w-72">
         <img
           className="w-full h-48 object-cover"
-          src="https://images.unsplash.com/photo-1657560566744-06d0b69f6647?q=80&w=600&auto=format&fit=crop"
+          src={book.coverImage}
           alt="image"
         />
 

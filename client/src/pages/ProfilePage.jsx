@@ -66,7 +66,7 @@ const ProfilePage = () => {
                         <div className="flex sm:items-center gap-4 max-sm:flex-col">
                           <div className="w-24 h-24 shrink-0">
                             <img
-                              src="https://placehold.co/600x400"
+                              src={product.book.coverImage}
                               className="w-full h-full object-contain"
                             />
                           </div>

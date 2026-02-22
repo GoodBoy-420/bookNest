@@ -40,7 +40,7 @@ const addToCart = async (req, res) => {
     });
   }
 
-  const { bookId, quantity } = req.body;
+  const { bookId, quantity, image } = req.body;
 
   if (!bookId) {
     return res.status(400).json({
@@ -49,7 +49,12 @@ const addToCart = async (req, res) => {
     });
   }
 
-  const cart = await CartServices.addToCart(userId, bookId, quantity || 1);
+  const cart = await CartServices.addToCart(
+    userId,
+    bookId,
+    quantity || 1,
+    image,
+  );
 
   res.status(200).send({
     success: true,

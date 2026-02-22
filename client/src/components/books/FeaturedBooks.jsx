@@ -12,7 +12,7 @@ const LatestBooks = ({ latestBooks }) => {
           >
             <img
               className="w-72 h-48 object-cover"
-              src="https://images.unsplash.com/photo-1657560566744-06d0b69f6647?q=80&w=600&auto=format&fit=crop"
+              src={book.coverImage}
               alt="image"
             />
             <div className="p-4 text-sm">
