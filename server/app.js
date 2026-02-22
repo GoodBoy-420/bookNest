@@ -24,7 +24,7 @@ app.use(limiter);
 
 app.post(
   "/api/v1/stripe/webhook",
-  express.raw({ type: "*/*" }),
+  express.raw({ type: "application/json" }),
   stripeWebhookController,
 );
 
@@ -43,7 +43,6 @@ app.use(
     // credentials: true,
   }),
 );
-app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 app.use(checkAuth);
 
