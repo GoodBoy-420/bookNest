@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Cart from "../../assets/cart.svg";
 import Logo from "../../assets/logo.svg";
@@ -9,12 +9,15 @@ import { useCart } from "../../hooks/useCart";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
   const { auth, setAuth } = useAuth();
   const { state } = useCart();
 
   const logOutHandler = () => {
     localStorage.removeItem("booknest_auth");
     setAuth({});
+    window.location.href = "/";
   };
 
   return (
