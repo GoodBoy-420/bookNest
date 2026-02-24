@@ -54,7 +54,7 @@ const addToCart = async (userId, bookId, quantity, image) => {
   }
 
   if (book.stock < quantity) {
-    const err = new Error(`Only ${book.stock} items available`);
+    const err = new Error(`${book.title} is out of stock.`);
     err.statusCode = 400;
     throw err;
   }
@@ -81,6 +81,56 @@ const addToCart = async (userId, bookId, quantity, image) => {
 
   cart.totalPrice = calculateTotal(cart.items);
   await cart.save();
+
+  return cart;
+};
+
+const updateQuantity = async (userId, bookId, action) => {
+  const book = await BookModel.findById(bookId);
+  if (!book) {
+    const err = new Error("Book Not Found or might be deleted.");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  let cart = await CartModel.findOne({ user: userId });
+  const item = cart.items.find((i) => i.book.toString() === bookId);
+
+  if (item) {
+    if (action === "inc") {
+      item.quantity += 1;
+    }
+
+    if (action === "dec") {
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+      }
+    }
+  } else {
+    const err = new Error("Book Not Found or might be deleted.");
+    err.statusCode = 400;
+    throw err;
+  }
+  cart.totalPrice = calculateTotal(cart.items);
+  await cart.save();
+
+  return cart;
+};
+
+const removeItem = async (userId, bookId) => {
+  let cart = await CartModel.updateOne(
+    { user: userId },
+    {
+      $pull: {
+        items: {
+          book: bookId,
+        },
+      },
+    },
+  );
+  cart = await CartModel.findOne({ user: userId });
+
+  cart.totalPrice = calculateTotal(cart.items);
 
   return cart;
 };
@@ -116,4 +166,4 @@ const getCart = async (userId) => {
   };
 };
 
-export { addToCart, getCart, syncCart };
+export { addToCart, getCart, removeItem, syncCart, updateQuantity };

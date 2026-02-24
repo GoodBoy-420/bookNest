@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import SuccessPage from "./pages/SuccessPage";
 import WishListPage from "./pages/WishListPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,10 +43,7 @@ const router = createBrowserRouter([
         path: "signup",
         element: <RegistrationPage />,
       },
-      {
-        path: "profile",
-        element: <ProfilePage />,
-      },
+
       {
         path: "cart",
         element: <CartPage />,
@@ -54,9 +52,19 @@ const router = createBrowserRouter([
         path: "wish-list",
         element: <WishListPage />,
       },
+
       {
-        path: "success",
-        element: <SuccessPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "profile",
+            element: <ProfilePage />,
+          },
+          {
+            path: "success",
+            element: <SuccessPage />,
+          },
+        ],
       },
     ],
   },

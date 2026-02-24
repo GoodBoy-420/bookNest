@@ -1,4 +1,4 @@
-const CartList = ({ item }) => {
+const CartList = ({ item, clearCart, updateQuantity, removeItem }) => {
   return (
     <>
       <div className="flex items-center gap-4">
@@ -19,11 +19,24 @@ const CartList = ({ item }) => {
         </p>
       </div>
       <div className="flex items-center justify-center gap-3">
-        <button className="w-8 h-8 border border-gray-300">-</button>
+        <button
+          onClick={() => updateQuantity(item.book || item?.book?._id, "dec")}
+          className="w-8 h-8 border border-gray-300 hover:cursor-pointer"
+        >
+          -
+        </button>
         <span>{item.quantity}</span>
-        <button className="w-8 h-8 border border-gray-300">+</button>
+        <button
+          onClick={() => updateQuantity(item.book || item?.book?._id, "inc")}
+          className="w-8 h-8 border border-gray-300 hover:cursor-pointer"
+        >
+          +
+        </button>
       </div>
-      <button className="mx-auto">
+      <button
+        onClick={() => removeItem(item.book || item?.book?._id)}
+        className="mx-auto hover:cursor-pointer"
+      >
         <svg
           width="20"
           height="20"

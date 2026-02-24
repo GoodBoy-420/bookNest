@@ -9,9 +9,8 @@ const CartProvider = ({ children }) => {
   const { auth } = useAuth();
   const { api } = useAxios();
 
-  /* ----------------------------------
-     🟢 Restore guest cart on app load
-  ---------------------------------- */
+  // Restore guest cart on app load
+
   useEffect(() => {
     if (!auth?.user) {
       const guestCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -19,18 +18,16 @@ const CartProvider = ({ children }) => {
     }
   }, []);
 
-  /* ----------------------------------
-     🔐 Sync guest cart after login
-  ---------------------------------- */
+  // Sync guest cart after login
+
   useEffect(() => {
     if (auth?.user) {
       syncGuestCart();
     }
   }, [auth?.user]);
 
-  /* ----------------------------------
-     👤 Guest cart hydration
-  ---------------------------------- */
+  // Guest cart hydration
+
   const hydrateGuestCart = (items) => {
     const totalItems = items.reduce((s, i) => s + i.quantity, 0);
     const totalPrice = items.reduce((s, i) => s + i.quantity * i.price, 0);
@@ -45,9 +42,8 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  /* ----------------------------------
-     🔐 Sync guest → DB & fetch cart
-  ---------------------------------- */
+  // Sync guest → DB & fetch cart
+
   const syncGuestCart = async () => {
     try {
       dispatch({ type: "cart_loading" });
@@ -76,11 +72,10 @@ const CartProvider = ({ children }) => {
     }
   };
 
-  /* ----------------------------------
-     ➕ Add to cart (guest + auth)
-  ---------------------------------- */
+  // Add to cart (guest + auth)
+
   const addToCart = async (bookId, price, title, image) => {
-    // 👤 GUEST USER
+    //  GUEST USER
     if (!auth?.user) {
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -103,8 +98,8 @@ const CartProvider = ({ children }) => {
       return;
     }
 
-    // 🔐 AUTH USER
-    await api.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
+    //  AUTH USER
+    await api.post("/cart/add", {
       bookId,
       quantity: 1,
       image,
@@ -113,32 +108,49 @@ const CartProvider = ({ children }) => {
     dispatch({ type: "cart_set", payload: res.data.data });
   };
 
-  /* ----------------------------------
-     🔄 Update quantity (cart page)
-  ---------------------------------- */
-  const updateQuantity = async (bookId, quantity) => {
+  const updateQuantity = async (id, action) => {
+    //  Guest
     if (!auth?.user) {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const item = cart.find((i) => i.book === bookId);
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-      if (item) item.quantity = quantity;
+      cart = cart.map((item) => {
+        if (item.book === id) {
+          if (action === "inc") item.quantity += 1;
+          if (action === "dec" && item.quantity > 1) item.quantity -= 1;
+        }
+        return item;
+      });
 
       localStorage.setItem("cart", JSON.stringify(cart));
       hydrateGuestCart(cart);
       return;
     }
+    let bookId = id._id;
 
-    await api.post(`${import.meta.env.VITE_BASE_URL}/cart/add`, {
-      bookId,
-      quantity,
-    });
+    //  Logged user
+    await api.put("/cart/update", { bookId, action });
     const res = await api.get("/cart");
     dispatch({ type: "cart_set", payload: res.data.data });
   };
 
-  /* ----------------------------------
-     🚪 Clear cart on logout
-  ---------------------------------- */
+  const removeItem = async (id) => {
+    //  Guest
+    if (!auth?.user) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart = cart.filter((item) => item.book !== id);
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      hydrateGuestCart(cart);
+      return;
+    }
+    let bookId = id._id;
+    //  Logged user
+    await api.delete(`/cart/remove/${bookId}`);
+    const res = await api.get("/cart");
+    dispatch({ type: "cart_set", payload: res.data.data });
+  };
+
+  //  🚪 Clear cart on logout
   const clearCart = () => {
     dispatch({ type: "cart_clear" });
     localStorage.removeItem("cart");
@@ -151,6 +163,7 @@ const CartProvider = ({ children }) => {
         addToCart,
         updateQuantity,
         clearCart,
+        removeItem,
       }}
     >
       {children}

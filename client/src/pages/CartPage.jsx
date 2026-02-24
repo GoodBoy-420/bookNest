@@ -6,7 +6,7 @@ import CheckoutModal from "../components/checkout/CheckoutModal.jsx";
 import { useCart } from "../hooks/useCart.js";
 
 const CartPage = () => {
-  const { state } = useCart();
+  const { state, clearCart, updateQuantity, removeItem } = useCart();
   const [showModal, setShowModal] = useState(false);
 
   if (state.totalItems <= 0) {
@@ -38,7 +38,12 @@ const CartPage = () => {
               key={index}
               className="grid grid-cols-[2fr_1fr_1fr_1fr] items-center text-gray-500 text-sm md:text-base font-medium pt-4"
             >
-              <CartList item={item} />
+              <CartList
+                item={item}
+                clearCart={clearCart}
+                updateQuantity={updateQuantity}
+                removeItem={removeItem}
+              />
             </div>
           ))}
 

@@ -62,6 +62,48 @@ const addToCart = async (req, res) => {
   });
 };
 
+const updateCartItem = async (req, res) => {
+  const user = await getAuthUser(req);
+  const userId = user[0]?._id;
+
+  const { bookId, action } = req.body;
+
+  const cart = await CartServices.updateQuantity(userId, bookId, action);
+
+  res.status(200).send({
+    success: true,
+    data: cart,
+  });
+};
+
+const removeCartItem = async (req, res) => {
+  const user = await getAuthUser(req);
+  const userId = user[0]?._id;
+
+  if (!userId) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  const { bookId } = req.params;
+
+  if (!bookId) {
+    return res.status(400).json({
+      success: false,
+      message: "Book not found",
+    });
+  }
+
+  const cart = await CartServices.removeItem(userId, bookId);
+
+  res.status(200).send({
+    success: true,
+    data: cart,
+  });
+};
+
 const getCart = async (req, res) => {
   const user = await getAuthUser(req);
   const userId = user[0]?._id;
@@ -81,4 +123,4 @@ const getCart = async (req, res) => {
   });
 };
 
-export { addToCart, getCart, syncCart };
+export { addToCart, getCart, removeCartItem, syncCart, updateCartItem };
