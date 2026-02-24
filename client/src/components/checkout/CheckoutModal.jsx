@@ -18,7 +18,7 @@ const CheckoutModal = ({ onClose }) => {
       const formData = new FormData(e.target);
       const formObject = Object.fromEntries(formData.entries());
 
-      if (auth?.authToken) {
+      
         const res = await api.post(
           `${import.meta.env.VITE_BASE_URL}/order/create-checkout-session`,
           { shippingAddress: formObject },
@@ -28,7 +28,7 @@ const CheckoutModal = ({ onClose }) => {
         } else {
           throw new Error(res.data.message || "Login failed");
         }
-      } else navigate("/signin");
+     
     } catch (err) {
       console.log(err);
       setLoading(false);
