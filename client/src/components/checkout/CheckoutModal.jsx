@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import useAxios from "../../hooks/useAxios";
 
 const CheckoutModal = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const { api } = useAxios();
+  const { auth } = useAxios();
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -14,15 +18,17 @@ const CheckoutModal = ({ onClose }) => {
       const formData = new FormData(e.target);
       const formObject = Object.fromEntries(formData.entries());
 
-      const res = await api.post(
-        `${import.meta.env.VITE_BASE_URL}/order/create-checkout-session`,
-        { shippingAddress: formObject },
-      );
-      if (res.data.success) {
-        window.location.href = res.data.message.url;
-      } else {
-        throw new Error(res.data.message || "Login failed");
-      }
+      if (auth?.authToken) {
+        const res = await api.post(
+          `${import.meta.env.VITE_BASE_URL}/order/create-checkout-session`,
+          { shippingAddress: formObject },
+        );
+        if (res.data.success) {
+          window.location.href = res.data.message.url;
+        } else {
+          throw new Error(res.data.message || "Login failed");
+        }
+      } else navigate("/signin");
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -32,8 +38,14 @@ const CheckoutModal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-      <div className="bg-white p-6 w-100 rounded-lg">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 bg-black/50 flex items-center justify-center"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white p-6 w-100 rounded-lg"
+      >
         <h2 className="text-lg font-semibold mb-4">Shipping Address</h2>
 
         <form onSubmit={submitForm} className="space-y-3">
