@@ -11,8 +11,8 @@ const BooksPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
   const keyword = searchParams.get("keyword") || "";
-  const minPrice = searchParams.get("minPrice");
-  const maxPrice = searchParams.get("maxPrice");
+  // const minPrice = searchParams.get("minPrice");
+  // const maxPrice = searchParams.get("maxPrice");
   const categories = searchParams.get("categories");
   const author = searchParams.get("author");
 
@@ -27,8 +27,6 @@ const BooksPage = () => {
             params: {
               page,
               keyword,
-              minPrice,
-              maxPrice,
               categories,
               author,
             },
@@ -48,7 +46,7 @@ const BooksPage = () => {
     };
 
     fetchBooks();
-  }, [page, keyword, minPrice, maxPrice, categories, author]);
+  }, [page, keyword, categories, author]);
 
   const updateParams = (newParams) => {
     setSearchParams({

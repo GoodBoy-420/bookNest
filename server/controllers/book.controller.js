@@ -14,14 +14,13 @@ const getFeaturedBooks = async (req, res) => {
 };
 
 const getAllBooks = async (req, res) => {
-  const { keyword = "", page = 1, minPrice, maxPrice, categories } = req.query;
+  const { keyword = "", page = 1, categories, author } = req.query;
 
   const categoryArray = categories ? categories.split(",") : [];
   const result = await BookServices.getAllBooks(
     keyword,
     page,
-    minPrice,
-    maxPrice,
+    author,
     categoryArray,
   );
 
