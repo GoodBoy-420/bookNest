@@ -29,13 +29,7 @@ const getFeaturedBooks = async (req, res) => {
   return data.slice(0, 4);
 };
 
-const getAllBooks = async (
-  keyword = "",
-  page = 1,
-  minPrice,
-  maxPrice,
-  categories = [],
-) => {
+const getAllBooks = async (keyword = "", page = 1, author, categories = []) => {
   page = parseInt(page);
 
   if (isNaN(page) || page < 1) page = 1;
@@ -54,12 +48,18 @@ const getAllBooks = async (
     ],
   };
 
-  if (minPrice !== undefined || maxPrice !== undefined) {
-    const priceFilter = {};
-    if (minPrice !== undefined) priceFilter.$gte = Number(minPrice);
-    if (maxPrice !== undefined) priceFilter.$lte = Number(maxPrice);
+  // if (minPrice !== undefined || maxPrice !== undefined) {
+  //   const priceFilter = {};
+  //   if (minPrice !== undefined) priceFilter.$gte = Number(minPrice);
+  //   if (maxPrice !== undefined) priceFilter.$lte = Number(maxPrice);
 
-    matchQuery.$and.push({ price: priceFilter });
+  //   matchQuery.$and.push({ price: priceFilter });
+  // }
+
+  if (author) {
+    matchQuery.$and.push({
+      author: { $regex: author, $options: "i" },
+    });
   }
 
   if (categories.length > 0) {

@@ -47,6 +47,9 @@ const GetSingleBook = () => {
                 <h3 className="text-lg sm:text-xl font-semibold text-slate-900">
                   {book[0]?.title}
                 </h3>
+                <h2 className="text-md sm:text-xl font-medium text-slate-900">
+                  BY {book[0]?.author}
+                </h2>
 
                 <div className="flex items-center gap-3 mt-2">
                   <Ratings rating={book[0]?.ratings} />
